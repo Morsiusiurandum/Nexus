@@ -1,6 +1,5 @@
 /*
  * Copyright (c) Morsiusiurandum. 2023-2024. All rights reserved.
- *
  */
 
 #ifndef APP_H
@@ -22,19 +21,20 @@ public:
 
     auto Awake() -> int;
 
-private:
     void Update();
 
-private:
-    ImguiManager                               imGui_manager{};
-    Camera                                     main_camera{};
-    Window                                     window;
-    Timer                                      timer{};
-    std::vector<std::unique_ptr<DrawableBase>> drawables{};
-    float                                      speed_factor = 13.0f;
-    static constexpr size_t                    nDrawables   = 80;
+    ImguiManager                                imGui_manager{};
+    Camera                                      main_camera{};
+    Window                                      window;
+    Timer                                       timer{};
+    std::vector<std::unique_ptr<DrawableBase> > drawables{};
+    float                                       speed_factor = 13.0f;
+    static constexpr size_t                     nDrawables   = 80;
 
+    std::unique_ptr<Graphics>   graphics_ptr;
     std::shared_ptr<GameObject> _object;
+
+    static App *Instance;
 };
 
 #endif //APP_H

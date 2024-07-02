@@ -10,7 +10,7 @@ add_compile_definitions(_UNICODE UNICODE)
 #
 #add_compile_definitions(_TIDY_TIMEOUT)
 
-include_directories(runtime/include)
+INCLUDE_DIRECTORIES(runtime/include utils)
 
 set(WIN32_RESOURCES editor/resources/WindowsProject.rc)
 

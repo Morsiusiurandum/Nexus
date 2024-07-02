@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Morsiusiurandum. 2023-2024. All rights reserved.
+ */
+
 #ifndef NEXUS_UTILS_COLOR_H_
 #define NEXUS_UTILS_COLOR_H_
 
@@ -38,7 +42,7 @@ public:
     void SetR(unsigned char r) noexcept;
 
     void SetG(unsigned char g) noexcept;
-    
+
     void SetB(unsigned char b) noexcept;
 };
 

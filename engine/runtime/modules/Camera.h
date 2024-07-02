@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Morsiusiurandum. 2023-2024. All rights reserved.
+ */
+
 #ifndef CAMERA_H
 #define CAMERA_H
 
@@ -19,6 +23,9 @@ private:
     float pitch = 0.0f;
     float yaw   = 0.0f;
     float roll  = 0.0f;
+
+public:
+    unsigned int clear_flag;
 };
 
 #endif //CAMERA_H

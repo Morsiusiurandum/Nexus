@@ -1,6 +1,5 @@
 /*
  * Copyright (c) Morsiusiurandum. 2023-2024. All rights reserved.
- *
  */
 
 #ifndef NEXUS_WINDOW_H
@@ -52,16 +51,16 @@ public:
      * @param name window name
      */
     Window(int width, int height, const WCHAR *name);
-    
+
     Window(const Window &) = delete;
 
     auto operator=(const Window &) -> Window & = delete;
-    
-    ~    Window();
+
+    ~ Window();
 
     [[nodiscard]] static auto ProcessMessage() noexcept -> std::optional<int>;
 
-    [[nodiscard]] auto GetGraphics() -> Graphics &;
+    // [[nodiscard]] auto GetGraphics() -> directx11::Graphics &;
 
 private:
     [[nodiscard]] auto HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
@@ -74,12 +73,10 @@ public:
     keyboard keyboard;
     Mouse    mouse;
 
-private:
     int width{}, height{};
 
     HWND h_wnd;
 
-    std::unique_ptr<Graphics> graphics_ptr;
 };
 
 #endif //NEXUS_WINDOW_H

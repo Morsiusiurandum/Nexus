@@ -37,13 +37,13 @@ App::App()
             // return std::make_unique<Box>(gfx, rng, adist, ddist, odist, rdist, bdist, mat);
             case 2:
                 return std::make_unique<Pyramid>(gfx, rng, adist, ddist, odist, rdist);
-            default:;
+            default: ;
             }
             return {};
         }
 
     private:
-        Graphics                             &gfx;
+        Graphics &                            gfx;
         std::mt19937                          rng{std::random_device{}()};
         std::uniform_real_distribution<float> adist{0.0f, PI * 2.0f};
         std::uniform_real_distribution<float> ddist{0.0f, PI * 0.5f};
@@ -55,15 +55,21 @@ App::App()
         std::uniform_int_distribution<int> typedist{0, 2};
     };
 
-    drawables.reserve(nDrawables);
-    std::generate_n(std::back_inserter(drawables), nDrawables, Factory{window.GetGraphics()});
+    graphics_ptr = std::make_unique<Graphics>(window.h_wnd, window.width, window.height);
 
-    _object = GameObject::CreatePrimitive(window.GetGraphics(), PRIMITIVE_CUBE);
+    drawables.reserve(nDrawables);
+    std::generate_n(std::back_inserter(drawables), nDrawables, Factory{*graphics_ptr});
+
+    _object = GameObject::CreatePrimitive(*graphics_ptr, PRIMITIVE_CUBE);
 
     const auto mesh = _object->GetComponent("component_mesh_filter");
 
-    window.GetGraphics().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+    graphics_ptr->SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+
+    Instance = this;
 }
+
+App *App::Instance = nullptr;
 
 App::~App() = default;
 
@@ -83,8 +89,8 @@ auto App::Update() -> void
 {
 
     const auto dt = timer.Mark() * speed_factor;
-    window.GetGraphics().ClearBuffer(0, 0, 0);
-    window.GetGraphics().SetCamera(main_camera.GetMatrix());
+    graphics_ptr->ClearBuffer(0, 0, 0);
+    graphics_ptr->SetCamera(main_camera.GetMatrix());
 
     // for (const auto &d: drawables)
     // {
@@ -95,7 +101,7 @@ auto App::Update() -> void
 
     _object->transform.position.x = 3 * sin(timer.Peek() * speed_factor);
     _object->transform.position.y = 3 * cos(timer.Peek() * speed_factor);
-    _object->mesh_renderer->Draw(window.GetGraphics());
+    _object->mesh_renderer->Draw(*graphics_ptr);
 
     // imgui window to control simulation speed
     if (ImGui::Begin("Simulation Speed"))
@@ -120,7 +126,7 @@ auto App::Update() -> void
 
     main_camera.SpawnControlWindow();
 
-    window.GetGraphics().EndFrame();
+    graphics_ptr->EndFrame();
 
     if (window.keyboard.KeyIsPressed(VK_MENU))
     {

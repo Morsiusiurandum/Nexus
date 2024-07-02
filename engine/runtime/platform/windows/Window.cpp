@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Morsiusiurandum. 2023-2024. All rights reserved.
+ */
+
 #include "Window.h"
 #include "imgui_impl_win32.h"
 
@@ -77,7 +81,6 @@ Window::Window(const int width, const int height, const WCHAR *name)
     ShowWindow(h_wnd, SW_SHOWDEFAULT);
     ImGui_ImplWin32_Init(h_wnd);
 
-    graphics_ptr = std::make_unique<Graphics>(h_wnd, width, height);
 }
 
 Window::~Window()
@@ -108,12 +111,6 @@ auto Window::ProcessMessage() noexcept -> std::optional<int>
     // return empty optional when not quitting app
     return {};
 }
-
-auto Window::GetGraphics() -> Graphics &
-{
-    return *graphics_ptr;
-}
-
 
 auto Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {

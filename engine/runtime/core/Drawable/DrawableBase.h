@@ -1,6 +1,5 @@
 /*
  * Copyright (c) Morsiusiurandum. 2023-2024. All rights reserved.
- *
  */
 
 #ifndef DRAWABLE_BASE_H
@@ -9,7 +8,7 @@
 #include "../../platform/windows/directx11/Graphics.h"
 #include <DirectXMath.h>
 #include <vector>
-
+using namespace directx11;
 class DrawableBase
 {
     template<class T>
